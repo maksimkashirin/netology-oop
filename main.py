@@ -100,24 +100,91 @@ class Reviewer(Mentor):
         return f'Имя: {self.name}\n' \
                f'Фамилия: {self.surname}'
 
-some_reviewer = Reviewer('Some', 'Buddy')
-some_lecturer = Lecturer('Some', 'Buddy')
-some_student = Student('Ruoy', 'Eman', 'your_gender')
+def average_students_grade(students, course):
+    all_grades = []
 
-some_student.courses_in_progress += ['Python', 'Git']
-some_student.finished_courses += ['Введение в программирование']
+    for student in students:
+        if course in student.grades:
+            all_grades += student.grades[course]
 
-some_lecturer.courses_attached += ['Python', 'Git']
-some_reviewer.courses_attached += ['Python', 'Git']
+    if len(all_grades) == 0:
+        return 0
 
-some_student.rate_lecture(some_lecturer, 'Python', 10)
-some_student.rate_lecture(some_lecturer, 'Git', 9.8)
+    return sum(all_grades) / len(all_grades)
 
-some_reviewer.rate_hw(some_student, 'Python', 10)
-some_reviewer.rate_hw(some_student, 'Git', 9.8)
 
-print(some_reviewer)
+def average_lecturers_grade(lecturers, course):
+    all_grades = []
+
+    for lecturer in lecturers:
+        if course in lecturer.grades:
+            all_grades += lecturer.grades[course]
+
+    if len(all_grades) == 0:
+        return 0
+
+    return sum(all_grades) / len(all_grades)
+
+
+student_1 = Student('Ruoy', 'Eman', 'your_gender')
+student_2 = Student('Ольга', 'Алёхина', 'Ж')
+
+lecturer_1 = Lecturer('Иван', 'Иванов')
+lecturer_2 = Lecturer('Сергей', 'Сергеев')
+
+reviewer_1 = Reviewer('Пётр', 'Петров')
+reviewer_2 = Reviewer('Some', 'Buddy')
+
+
+student_1.courses_in_progress += ['Python', 'Git']
+student_1.finished_courses += ['Введение в программирование']
+
+student_2.courses_in_progress += ['Python', 'Java']
+student_2.finished_courses += ['Git']
+
+
+lecturer_1.courses_attached += ['Python', 'Git']
+lecturer_2.courses_attached += ['Python', 'Java']
+
+reviewer_1.courses_attached += ['Python', 'Git']
+reviewer_2.courses_attached += ['Python', 'Java']
+
+
+reviewer_1.rate_hw(student_1, 'Python', 10)
+reviewer_1.rate_hw(student_1, 'Git', 9)
+
+reviewer_2.rate_hw(student_2, 'Python', 8)
+reviewer_2.rate_hw(student_2, 'Java', 7)
+
+
+student_1.rate_lecture(lecturer_1, 'Python', 10)
+student_1.rate_lecture(lecturer_1, 'Git', 9)
+
+student_2.rate_lecture(lecturer_2, 'Python', 8)
+student_2.rate_lecture(lecturer_2, 'Java', 7)
+
+
+print(student_1)
 print()
-print(some_lecturer)
+print(student_2)
 print()
-print(some_student)
+print(lecturer_1)
+print()
+print(lecturer_2)
+print()
+print(reviewer_1)
+print()
+print(reviewer_2)
+print()
+
+print('Сравнение студентов:')
+print(student_1 > student_2)
+
+print('Сравнение лекторов:')
+print(lecturer_1 > lecturer_2)
+
+print('Средняя оценка студентов по Python:')
+print(average_students_grade([student_1, student_2], 'Python'))
+
+print('Средняя оценка лекторов по Python:')
+print(average_lecturers_grade([lecturer_1, lecturer_2], 'Python'))
