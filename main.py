@@ -32,19 +32,19 @@ class Student:
                f'Завершенные курсы: {", ".join(self.finished_courses)}'
 
     def __lt__(self, other):
-        if isinstance(other, Student):
-            return self.average_grade() < other.average_grade()
-        return 'Ошибка'
+        if not isinstance(other, Student):
+            return NotImplemented
+        return self.average_grade() < other.average_grade()
 
     def __gt__(self, other):
-        if isinstance(other, Student):
-            return self.average_grade() > other.average_grade()
-        return 'Ошибка'
+        if not isinstance(other, Student):
+            return NotImplemented
+        return self.average_grade() > other.average_grade()
 
     def __eq__(self, other):
-        if isinstance(other, Student):
-            return self.average_grade() == other.average_grade()
-        return 'Ошибка'
+        if not isinstance(other, Student):
+            return NotImplemented
+        return self.average_grade() == other.average_grade()
 
 class Mentor:
     def __init__(self, name, surname):
@@ -71,19 +71,19 @@ class Lecturer(Mentor):
                f'Средняя оценка за лекции: {self.average_grade()}'
 
     def __lt__(self, other):
-        if isinstance(other, Lecturer):
-            return self.average_grade() < other.average_grade()
-        return 'Ошибка'
+        if not isinstance(other, Lecturer):
+            return NotImplemented
+        return self.average_grade() < other.average_grade()
 
     def __gt__(self, other):
-        if isinstance(other, Lecturer):
-            return self.average_grade() > other.average_grade()
-        return 'Ошибка'
+        if not isinstance(other, Lecturer):
+            return NotImplemented
+        return self.average_grade() > other.average_grade()
 
     def __eq__(self, other):
-        if isinstance(other, Lecturer):
-            return self.average_grade() == other.average_grade()
-        return 'Ошибка'
+        if not isinstance(other, Lecturer):
+            return NotImplemented
+        return self.average_grade() == other.average_grade()
 
 
 class Reviewer(Mentor):
@@ -188,3 +188,9 @@ print(average_students_grade([student_1, student_2], 'Python'))
 
 print('Средняя оценка лекторов по Python:')
 print(average_lecturers_grade([lecturer_1, lecturer_2], 'Python'))
+
+print("Проверка ошибок:")
+
+print(student_1.rate_lecture(lecturer_1, 'Java', 8))
+print(student_1.rate_lecture(reviewer_1, 'Python', 8))
+print(reviewer_1.rate_hw(student_2, 'Git', 10))
